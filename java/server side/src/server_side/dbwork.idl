@@ -1,0 +1,6 @@
+interface DbWork {
+  string addNode(in string name);
+  string getNode(in string name);
+  string addRelationship(in string node1, in string node2);
+  string getRelationship(in string node1, in string node2);
+};

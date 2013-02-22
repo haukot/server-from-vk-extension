@@ -10,9 +10,12 @@ start() ->
 loop(Socket) ->
     case gen_tcp:recv(Socket, 0) of
         {ok, Data} ->
-        	%<<X, Y>> = Data,
-        	io:format("From client: ~p~n" , [Data]),
-            %gen_tcp:send(Socket, <<Res>>),
+        	<<X>> = Data,
+        	io:format("From client: ~p~n" , [X]),
+			{ok,Host}=inet:gethostname().
+			JavaServer = {dummy, list_to_atom("javaserver@"++Host)}.
+			Res = gen_server:call(JavaServer, {addNode, X}).
+            gen_tcp:send(Socket, <<Res>>),
             loop(Socket);
         {error, closed} ->
             ok
